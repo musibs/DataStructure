@@ -82,6 +82,112 @@ public class LinkedList<T> {
 		return false;
 	}
 	
+	public void deleteAnyElement(T key) {
+		
+		if(Objects.isNull(head)) {
+			return;
+		}
+		
+		if(head.item == key) {
+			head = head.next;
+			return;
+		}
+		
+		Node<T> prev = null;
+		Node<T> temp = head;
+		
+		while(Objects.nonNull(temp) && temp.item != key) {
+			prev = temp;
+			temp = temp.next;
+		}
+		
+		if(temp == null) {
+			System.out.println("Key not found");
+			return;
+		}
+		
+		prev.next = temp.next;
+	}
+	
+	public void deleteSpecificPostion(int position) {
+		if(Objects.isNull(head)) {
+			return;
+		}
+		
+		Node<T> prev = null;
+		Node<T> temp = head;
+		int count = 1;
+		while(Objects.nonNull(temp)) {
+			count++;
+			prev = temp;
+			temp = temp.next;
+			if(count == position) {
+				prev.next = temp.next;
+				return;
+			}
+		}
+	}
+	
+	public int lengthThgroughIterative() {
+		
+		int count = 0;
+		if(Objects.isNull(head)) {
+			return count;
+		}
+	
+		Node<T> temp = head;
+		while(Objects.nonNull(temp)) {
+			count++;
+			temp = temp.next;
+		}
+		return count;
+	}
+	
+	private int lengthRecursive(Node<T> node) {
+		if(Objects.isNull(node)) {
+			return 0;
+		}
+		else return 1+lengthRecursive(node.next);
+	}
+	
+	public int lengthThgroughRecursive() {
+		return lengthRecursive(head);
+	}
+	
+	
+	public boolean findByIteration(T key) {
+		if(Objects.isNull(head)) {
+			return false;
+		}
+		else {
+			Node<T> temp = head;
+			while(Objects.nonNull(temp) && temp.item != key) {
+				temp = temp.next;
+			}
+			
+			if(Objects.isNull(temp)) {
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
+	}
+	
+	private boolean findThroughRecursion(Node<T> node, T key) {
+		if(Objects.isNull(node)) {
+			return false;
+		}
+		if(node.item == key) {
+			return true;
+		}
+		return findThroughRecursion(node.next, key);
+	}
+	
+	public boolean findByRecursion(T key) {
+		return findThroughRecursion(head, key);
+	}
+	
 	/**
 	 * Returns the size of the list
 	 * 
