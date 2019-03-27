@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Single Linked list implementation 
  * 
- * @author Somnath Musib [Tata Consultancy Services Ltd]
+ * @author Somnath Musib 
  *
  * @param <T>
  */
