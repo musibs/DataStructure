@@ -188,6 +188,42 @@ public class LinkedList<T> {
 		return findThroughRecursion(head, key);
 	}
 	
+	//Bad impl : traversing the list twice!!
+	public T findNthItem(int nthPosition) {
+		if(Objects.isNull(head) || size() < nthPosition) {
+			throw new IllegalArgumentException("Empty list or out of range");
+		}
+		
+		Node<T> prev = null;
+		Node<T> temp = head;
+		for(int i=0; i<nthPosition; i++) {
+			prev = temp;
+			temp = temp.next;
+		}
+		return prev.item;
+	}
+	
+	
+	/**
+	 * Returns the size of the list
+	 * 
+	 * @return
+	 */
+	public T findNthItemEff(int nthPosition) {
+		
+		Node<T> temp = head;
+		int count = 0;
+		
+		while(Objects.nonNull(temp)) {
+			if(count == nthPosition) {
+				return temp.item;
+			}
+			temp = temp.next;
+			count++;
+		}
+		throw new IllegalArgumentException("Invalid Position");
+	}
+	
 	/**
 	 * Returns the size of the list
 	 * 
