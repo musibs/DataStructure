@@ -125,7 +125,7 @@ public class LinkedList<E> {
 		}
 		
 		Node<E> tempNode = head;
-		while(Objects.nonNull(tempNode.next)) {
+		while(Objects.nonNull(tempNode)) {
 			if(item.equals(tempNode.item)) {
 				return tempNode;
 			}
@@ -277,7 +277,7 @@ public class LinkedList<E> {
 	/**
 	 * Finds the nth element from the end of the list
 	 * 
-	 * Implementation Note: This is a better approach as in this approach, we traverse the 
+	 * <b>Implementation Note:</b> This is a better approach as in this approach, we traverse the 
 	 * list only once. It uses two reference pointer to traverse the list simultaneously. 
 	 * At first, First pointer traverse first n elements. Next, both the pointers traverse 
 	 * the list simultaneously until first pointer reaches the end of the list. This leaves 
@@ -349,7 +349,69 @@ public class LinkedList<E> {
 	}
 	
 	
-	private static class Node<E>{
+	public int repeatCount(E item) {
+		if(Objects.isNull(head)) {
+			throw new IllegalArgumentException("Empty list");
+		}
+		
+		Node<E> current = head;
+		int count = 0;
+		while(Objects.nonNull(current.next)) {
+			if(item.equals(current.item)) {
+				count++;
+			}
+			current = current.next;
+		}
+		return count;	
+	}
+	
+	public Node<E> detectCycle() {
+		Objects.requireNonNull(head, "Empty list");
+		
+		Node<E> fastPointer = head;
+		Node<E> slowPointer = head;
+		
+		while(Objects.nonNull(slowPointer) && Objects.nonNull(fastPointer) && Objects.nonNull(fastPointer.next)) {
+			slowPointer = slowPointer.next;
+			fastPointer = fastPointer.next.next;
+			
+			if(slowPointer.equals(fastPointer)) {
+				return slowPointer;
+			}
+		}
+		
+		return null;
+	}
+	
+	
+	public Node<E> findStartOfLoop() {
+		Node<E> loopNode = detectCycle();
+		if(Objects.nonNull(loopNode)) {
+			
+			Node<E> startNode = head;
+			
+			while(!loopNode.equals(startNode)) {
+				startNode = startNode.next;
+				loopNode = loopNode.next;
+			}
+			return startNode;
+		}
+		return null;
+	}
+	
+	public int lengthOfLoop() {
+		Node<E> startOfTheLoop = findStartOfLoop();
+		
+		Node<E> endOfTheLoop = startOfTheLoop;
+		int count = 0;
+		while(!startOfTheLoop.next.equals(endOfTheLoop)) {
+			count++;
+			startOfTheLoop = startOfTheLoop.next;
+		}
+		return count;
+	}
+	
+	static class Node<E>{
 		
 		private E item;
 		private Node<E> next;
@@ -358,6 +420,21 @@ public class LinkedList<E> {
 			this.item = item;
 			this.next = link;
 		}
+
+		
+		public E getItem() {
+			return item;
+		}
+
+		public Node<E> getNext() {
+			return next;
+		}
+
+
+		public void setNext(Node<E> next) {
+			this.next = next;
+		}
+
 
 		@Override
 		public String toString() {
