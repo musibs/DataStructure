@@ -1,10 +1,7 @@
 package com.codefountain.ds.lds.ll;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
-
-import sun.awt.image.ImageWatched.Link;
 
 /**
  * This is an implementation of linked list data structure
