@@ -1,6 +1,10 @@
 package com.codefountain.ds.lds.ll;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
+
+import sun.awt.image.ImageWatched.Link;
 
 /**
  * This is an implementation of linked list data structure
@@ -38,6 +42,7 @@ public class LinkedList<E> {
 	 * Traverse the linked list
 	 */
 	public void iterate() {
+		System.out.println();
 		if(Objects.isNull(head)) {
 			throw new IllegalArgumentException("Empty list");
 		}
@@ -409,6 +414,270 @@ public class LinkedList<E> {
 			startOfTheLoop = startOfTheLoop.next;
 		}
 		return count;
+	}
+	
+	/**
+	 * Assumes the list is sorted
+	 */
+	public void removeDuplicateInSortedLinkedList() {
+		Objects.requireNonNull(head, "Empty list");
+		
+		Node<E> previous = null;
+		Node<E> current = head;
+		
+		while(Objects.nonNull(current) && Objects.nonNull(current.next)) {
+			previous = current;
+			current = current.next;
+			if(previous.item.equals(current.item)) {
+				System.out.println("Duplicate "+previous.item);
+				previous.next = current.next;
+				
+				if(head.item.equals(previous.item)) {
+					head.next = previous.next;
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Assumes the list is sorted
+	 */
+	public void removeDuplicateInSortedLinkedlist2() {
+		Objects.requireNonNull(head, "Empty list");
+		
+		Node<E> current = head;
+		Node<E> nextNext = null;
+		while(Objects.nonNull(current.next)) {
+			if(current.item.equals(current.next.item)) {
+				nextNext = current.next.next;
+				current.next = nextNext;
+			}
+			else {
+				current = current.next;
+			}
+		}
+	}
+	
+	/**
+	 * Removes duplicates from a UNSORTED linked list. This is a Brute force
+	 * algorithm and runs in O(n^2) time
+	 */
+	public void removeDuplicateInUnsortedLinkedList1_BF() {
+		Objects.requireNonNull(head, "Empty list");
+		
+		Node<E> startPointer = head;
+		Node<E> runnerPointer = null;
+		
+		while(Objects.nonNull(startPointer) && Objects.nonNull(startPointer.next)) {
+			
+			runnerPointer = startPointer;
+			while(Objects.nonNull(runnerPointer.next)) {
+				if(startPointer.item.equals(runnerPointer.next.item)) {
+					runnerPointer.next = runnerPointer.next.next;
+				}
+				else {
+					runnerPointer = runnerPointer.next;
+				}
+			}
+			startPointer = startPointer.next;
+		}
+	}
+	
+	/**
+	 * Removes duplicates from a UNSORTED linked list. This is an slightly optimized
+	 * algorithm and runs in O(n) time but requires O(n) space
+	 */
+	public void removeDuplicateInUnsortedLinkedlist2_Hashing() {
+		Objects.requireNonNull(head, "Empty list");
+		
+		Node<E> tempNode = head;
+		Node<E> previous = null;
+		
+		HashSet<E> container = new HashSet<>();
+		
+		while(Objects.nonNull(tempNode)) {
+			
+			if(container.contains(tempNode.item)) {
+				previous.next = tempNode.next;
+			}
+			else {
+				container.add(tempNode.item);
+				previous = tempNode;
+			}
+			tempNode = tempNode.next;
+		}
+	}
+	
+	
+	public void swapData(E key1, E key2) {
+		Objects.requireNonNull(head, "Empty list");
+		
+		
+		Node<E> tempNode = head;
+		
+		while(Objects.nonNull(tempNode)) {
+			
+			if(tempNode.item.equals(key1)) {
+				tempNode.item = key2;
+				tempNode = tempNode.next;
+				continue;
+			}
+			
+			if(tempNode.item.equals(key2)) {
+				tempNode.item = key1;
+				tempNode = tempNode.next;
+				continue;
+			}
+			tempNode = tempNode.next;
+		}
+	}
+	
+	public void swapNodes(E key1, E key2) {
+		Objects.requireNonNull(head, "Empty list");
+		
+		if(key1.equals(key2)) {
+			return;
+		}
+		
+		Node<E> previousKey1 = null;
+		Node<E> currentKey1 = head;
+		
+		while(Objects.nonNull(currentKey1) && !currentKey1.item.equals(key1)) {
+			previousKey1 = currentKey1;
+			currentKey1 = currentKey1.next;
+		}
+		
+		Node<E> previousKey2 = null;
+		Node<E> currentKey2 = head;
+		
+		while(Objects.nonNull(currentKey2) && !currentKey2.item.equals(key2)) {
+			previousKey2 = currentKey2;
+			currentKey2 = currentKey2.next;
+		}
+		
+		
+		if(Objects.isNull(currentKey1) || Objects.isNull(currentKey2)) {
+			return;
+		}
+		
+		if(Objects.nonNull(previousKey1)) {
+			previousKey1.next = currentKey2;
+		}
+		else {
+			head = currentKey2;
+		}
+		
+		
+		if(Objects.nonNull(previousKey2)) {
+			previousKey2.next = currentKey1;
+		}
+		else {
+			head = currentKey1;
+		}
+		iterate();
+		Node<E> temp = currentKey1.next;
+		currentKey1.next = currentKey2.next;
+		currentKey2.next = temp;
+	}
+	
+	
+	public void pairwiseSwap() {
+		Objects.requireNonNull(head, "Empty list");
+		
+		Node<E> tempNode = head;
+		
+		while(Objects.nonNull(tempNode) && Objects.nonNull(tempNode.next)) {
+			E data = tempNode.item;
+			tempNode.item = tempNode.next.item;
+			tempNode.next.item = data;
+			tempNode = tempNode.next.next;
+		}
+	}
+	
+	private void pairWiseSwapRecursive(Node<E> node) {
+		if(Objects.isNull(node)) {
+			return;
+		}
+		
+		E data = node.item;
+		node.item = node.next.item;
+		node.next.item = data;
+		
+		pairWiseSwapRecursive(node.next.next);
+	}
+	
+	public void pairwiseSwapRec() {
+		pairWiseSwapRecursive(head);
+	} 
+	
+	public void moveLastElementToTheFront() {
+		Objects.requireNonNull(head, "Empty list");
+		
+		Node<E> tempNode = head;
+		Node<E> previous = null;
+		
+		while(Objects.nonNull(tempNode.next)) {
+			previous = tempNode;
+			tempNode = tempNode.next;
+		}
+		
+		previous.next = null;
+		tempNode.next = head;
+		head = tempNode;
+	}
+	
+	public static void intersectionOfTwoSortedLinkedList(LinkedList<Integer> list1, LinkedList<Integer> list2) {
+		
+		Objects.requireNonNull(list1);
+		Objects.requireNonNull(list2);
+		list1.iterate();
+		list2.iterate();
+		Node<Integer> tempNode1 = list1.head;
+		Node<Integer> tempNode2 = list2.head;
+		
+		Objects.requireNonNull(tempNode1);
+		Objects.requireNonNull(tempNode2);
+		
+		LinkedList<Integer> intersectionList = new LinkedList<>();
+		
+		while(Objects.nonNull(tempNode1) && Objects.nonNull(tempNode2)) {
+			if(tempNode1.item.equals(tempNode2.item)) {
+				intersectionList.add(tempNode1.item);
+				tempNode1 = tempNode1.next;
+				tempNode2 = tempNode2.next;
+			}
+			else if(tempNode1.item < tempNode2.item) {
+				tempNode1 = tempNode1.next;
+			}
+			else {
+				tempNode2 = tempNode2.next;
+			}
+		}
+		intersectionList.iterate();
+	}
+	
+	public static Node<Integer> findIntersectionOfTwoLinkedList(LinkedList<Integer> list1, LinkedList<Integer> list2){
+		
+		Objects.requireNonNull(list1);
+		Objects.requireNonNull(list2);
+		list1.iterate();
+		list2.iterate();
+		Node<Integer> tempNode1 = list1.head;
+		Node<Integer> tempNode2 = list2.head;
+		
+		Objects.requireNonNull(tempNode1);
+		Objects.requireNonNull(tempNode2);
+		
+		while(Objects.nonNull(tempNode1.next) && Objects.nonNull(tempNode2.next)) {
+			if(tempNode1.next.equals(tempNode2.next)) {
+				return tempNode1.next;
+			}
+			else {
+				tempNode1 = tempNode1.next;
+				tempNode2 = tempNode2.next;
+			}
+		}
+		return null;
 	}
 	
 	static class Node<E>{
