@@ -308,7 +308,16 @@ public class LinkedList<E> {
 		return secondPointer;
 	}
 	
-	
+	/**
+	 * This method finds the middle element of a linked list.
+	 * It uses double pointer approach to traverse the list only once.
+	 * FastPointer traverse two nodes in each iteration and SlowPointer 
+	 * traverse one node in each iteration. Thus, when the FastPointer 
+	 * reaches to the end of the list, SlowPointer reaches to the middle
+	 * of the list.
+	 * 
+	 * @return
+	 */
 	public Node<E> findMiddleElement(){
 		if(Objects.isNull(head)) {
 			throw new IllegalArgumentException("Empty list");
@@ -330,7 +339,15 @@ public class LinkedList<E> {
 	}
 	
 	/**
-	 * Reverse a linked list
+	 * Reverse a linked list.
+	 * 
+	 * <b>Implementation Note:</b> This approach uses three pointers
+	 * to reverse the list. Previous pointer to keep track of the 
+	 * previous element, Current pointer to track the current node
+	 * and Next pointer to track the upcoming node.
+	 * 
+	 * As we proceed iterating the list, we keep pointing the previous 
+	 * node in the current node. And current node to the next node.
 	 */
 	public void reverse() {
 		if(Objects.isNull(head)) {
@@ -350,7 +367,13 @@ public class LinkedList<E> {
 		head = previous;
 	}
 	
-	
+	/**
+	 * This method counts how many times a given element has been repeated
+	 * in the list.
+	 * 
+	 * @param item
+	 * @return number of times a given element has been repeated in the list 
+	 */
 	public int repeatCount(E item) {
 		if(Objects.isNull(head)) {
 			throw new IllegalArgumentException("Empty list");
@@ -367,6 +390,15 @@ public class LinkedList<E> {
 		return count;	
 	}
 	
+	/**
+	 * This method detects whether there is a cycle present in the list.
+	 * This method uses Floyd's Cycle Detection algorithm. The underlying 
+	 * idea is two pointers (Fast and Slow) keep iterating list until the 
+	 * FastPointer reaches the end of the list or both the pointers meet
+	 * at same point. If both meets at a point, then there is definitely a 
+	 * cycle in the list. Otherwise, there is no cycle.
+	 * @return
+	 */
 	public Node<E> detectCycle() {
 		Objects.requireNonNull(head, "Empty list");
 		
@@ -385,7 +417,14 @@ public class LinkedList<E> {
 		return null;
 	}
 	
-	
+	/**
+	 * This method detects the start of a loop if there is a loop in a linked list
+	 * Once a cycle is detected in a linked list. The element where the cycle is 
+	 * detected and the start element are traversed at the same time, then the point
+	 * where they met is the start of the loop.
+	 * 
+	 * @return
+	 */
 	public Node<E> findStartOfLoop() {
 		Node<E> loopNode = detectCycle();
 		if(Objects.nonNull(loopNode)) {
@@ -401,6 +440,11 @@ public class LinkedList<E> {
 		return null;
 	}
 	
+	/**
+	 * This method finds the length of a loop in a linked list
+	 * 
+	 * @return
+	 */
 	public int lengthOfLoop() {
 		Node<E> startOfTheLoop = findStartOfLoop();
 		
@@ -505,10 +549,19 @@ public class LinkedList<E> {
 		}
 	}
 	
-	
+	/**
+	 * This method swaps data of two nodes without swapping the 
+	 * actual nodes
+	 * 
+	 * @param key1
+	 * @param key2
+	 */
 	public void swapData(E key1, E key2) {
 		Objects.requireNonNull(head, "Empty list");
 		
+		if(key1.equals(key2)) {
+			return;
+		}
 		
 		Node<E> tempNode = head;
 		
@@ -529,6 +582,12 @@ public class LinkedList<E> {
 		}
 	}
 	
+	/**
+	 * This swaps two elements and swaps the nodes physically
+	 * 
+	 * @param key1
+	 * @param key2
+	 */
 	public void swapNodes(E key1, E key2) {
 		Objects.requireNonNull(head, "Empty list");
 		
@@ -577,7 +636,10 @@ public class LinkedList<E> {
 		currentKey2.next = temp;
 	}
 	
-	
+	/**
+	 * This method does a pairwise swap of nodes in a linked list
+	 * in an iterative approach
+	 */
 	public void pairwiseSwap() {
 		Objects.requireNonNull(head, "Empty list");
 		
@@ -591,6 +653,7 @@ public class LinkedList<E> {
 		}
 	}
 	
+
 	private void pairWiseSwapRecursive(Node<E> node) {
 		if(Objects.isNull(node)) {
 			return;
@@ -603,10 +666,19 @@ public class LinkedList<E> {
 		pairWiseSwapRecursive(node.next.next);
 	}
 	
+	/**
+	 * This method does a pairwise swap of nodes in a linked list in
+	 * a recursive approach
+	 * 
+	 * @param node
+	 */
 	public void pairwiseSwapRec() {
 		pairWiseSwapRecursive(head);
 	} 
 	
+	/**
+	 * This method moves the last element to the front of the list
+	 */
 	public void moveLastElementToTheFront() {
 		Objects.requireNonNull(head, "Empty list");
 		
@@ -623,12 +695,19 @@ public class LinkedList<E> {
 		head = tempNode;
 	}
 	
+	/**
+	 * This method finds the intersection of two SORTED list
+	 * 
+	 * @param list1
+	 * @param list2
+	 */
 	public static void intersectionOfTwoSortedLinkedList(LinkedList<Integer> list1, LinkedList<Integer> list2) {
 		
 		Objects.requireNonNull(list1);
 		Objects.requireNonNull(list2);
-		list1.iterate();
-		list2.iterate();
+		/*
+		 * list1.iterate(); list2.iterate();
+		 */
 		Node<Integer> tempNode1 = list1.head;
 		Node<Integer> tempNode2 = list2.head;
 		
@@ -653,12 +732,21 @@ public class LinkedList<E> {
 		intersectionList.iterate();
 	}
 	
+	/**
+	 * This method finds the intersection of two UNSORTED list
+	 * 
+	 * @param list1
+	 * @param list2
+	 * @return
+	 */
 	public static Node<Integer> findIntersectionOfTwoLinkedList(LinkedList<Integer> list1, LinkedList<Integer> list2){
 		
 		Objects.requireNonNull(list1);
 		Objects.requireNonNull(list2);
-		list1.iterate();
-		list2.iterate();
+		
+		/*
+		 * list1.iterate(); list2.iterate();
+		 */
 		Node<Integer> tempNode1 = list1.head;
 		Node<Integer> tempNode2 = list2.head;
 		
@@ -677,6 +765,13 @@ public class LinkedList<E> {
 		return null;
 	}
 	
+	/**
+	 * Inner class represents a node in the linked list
+	 * 
+	 * @author Somnath Musib
+	 *
+	 * @param <E>
+	 */
 	static class Node<E>{
 		
 		private E item;
