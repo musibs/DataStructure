@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import com.codefountain.ds.lds.ll.utils.ListUtils;
 
-public class Runner {
+public class SingleLinkedListRunner {
 
 	public static void main(String[] args) {
 		

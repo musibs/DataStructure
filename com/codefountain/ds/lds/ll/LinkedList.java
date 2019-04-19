@@ -13,7 +13,7 @@ import java.util.Objects;
 public class LinkedList<E> {
 	
 	/**
-	 * Reference to the head of the listedlist
+	 * Reference to the head of the linked list
 	 */
 	private Node<E> head;
 	
