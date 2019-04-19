@@ -1,6 +1,6 @@
 package com.codefountain.ds.lds.array;
 
-public class ArrayStructures {
+public class SortingAlgorithms {
 
 	
 	private int[] myArray = new int[30];
@@ -102,7 +102,7 @@ public class ArrayStructures {
 	}
 	
 	public static void main(String[] args) {
-		ArrayStructures array = new ArrayStructures();
+		SortingAlgorithms array = new SortingAlgorithms();
 		array.createRandomArray();
 		array.printArray();
 		array.bubbleSort();
