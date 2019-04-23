@@ -111,6 +111,67 @@ public class SortingAlgorithms {
 		printArray();
 	}
 	
+	protected static void mergeSort() {
+		sort(a, 0, arraySize-1);
+		printArray();
+	}
+	
+	private static void sort(int a[], int left, int right) {
+		if(left < right) {
+			int middle = (left+right)/2;
+			sort(a, left, middle);
+			sort(a, middle+1, right);
+			merge(a, left, middle, right);
+		}
+	}
+	
+	
+	private static void merge(int[] myArray, int left, int middle, int right) {
+		
+		
+		int firstArraySize = middle-left+1;
+		int secondArraySize = right-middle;
+		
+		int[] firstSubArray = new int[firstArraySize];
+		int[] secondSubArray = new int[secondArraySize];
+		
+		for(int i=0; i<firstArraySize; i++) {
+			firstSubArray[i] = myArray[left+i];
+		}
+		
+		for(int i=0; i<secondArraySize; i++) {
+			secondSubArray[i] = myArray[middle+1+i];
+		}
+		
+		int i=0, j=0, k=left;
+		
+		while(i < firstArraySize && j < secondArraySize) {
+			
+			if(firstSubArray[i] <= secondSubArray[j]) {
+				myArray[k] = firstSubArray[i];
+				i++;
+			}
+			else {
+				myArray[k] = secondSubArray[j];
+				j++;
+			}
+			k++;
+		}
+		
+		while( i< firstArraySize) {
+			myArray[k] = firstSubArray[i];
+			i++;
+			k++;
+		}
+		
+		
+		while(j < secondArraySize) {
+			myArray[k] = secondSubArray[j];
+			j++;
+			k++;
+		}
+	}
+	
 	public static void main(String[] args) {
 		SortingAlgorithms array = new SortingAlgorithms();
 		array.createRandomArray();
