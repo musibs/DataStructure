@@ -97,16 +97,27 @@ public class SortingAlgorithms {
 		printArray();
 	}
 	
-	public void insertionSort() {
-		
+	private void insertionSort() {
+		for(int i=1; i<arraySize; i++) {
+			int key = myArray[i];
+			int j = i-1;
+			while(j >=0 && myArray[j] > key) {
+				myArray[j+1] = myArray[j];
+				j = j-1;
+			}
+			myArray[j+1] = key;
+		}
+		System.out.println("Insertion Sort:");
+		printArray();
 	}
 	
 	public static void main(String[] args) {
 		SortingAlgorithms array = new SortingAlgorithms();
 		array.createRandomArray();
 		array.printArray();
-		array.bubbleSort();
-		array.selectionSort();
+		//array.bubbleSort();
+		//array.selectionSort();
+		array.insertionSort();
 	}
 
 }
